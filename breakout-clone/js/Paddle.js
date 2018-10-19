@@ -3,8 +3,8 @@ import Role from "./Role";
 export default class Paddle extends Role {
   constructor(path) {
     super(path)
-    this.width = 200
-    this.height = 50
+    this.width = 160
+    this.height = 40
   }
 
   moveX(speed) {

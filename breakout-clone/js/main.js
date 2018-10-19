@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
   game.registerAction(' ', () => {
     ball.fire()
   })
+  // 图片绘制
   game.draw = () => {
     game.drawImage(paddle)
     game.drawImage(ball)
   }
+  // 每一帧调用
   game.update = () => {
     ball.move()
     if (paddle.collide(ball)) {
@@ -39,7 +41,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
-
-
-
-
