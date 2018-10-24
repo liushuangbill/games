@@ -2,7 +2,7 @@ export default class Game {
   constructor(canvas) {
     this.ctx = this.initCanvas(canvas)
     // 游戏帧数
-    this.frequency = 1000 / 30
+    this.frequency = 1000 / 60
     // 记录所有按键，减少模板式代码 
     // ArrowUp,ArrowRight,ArrowDown,ArrowLeft
     this.keydowns = {}

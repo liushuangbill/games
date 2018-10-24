@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "webpack -w"
+    "build": "rm -rf ./dist && webpack -w"
   },
   "devDependencies": {
     "file-loader": "^2.0.0",

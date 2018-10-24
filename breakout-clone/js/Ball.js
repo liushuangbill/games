@@ -6,8 +6,8 @@ export default class Ball extends Role {
     this.fired = false
     this.speedX = 5
     this.speedY = 10
-    this.x = 0
-    this.y = 0
+    this.x = this.canvasWidth * 0.5 - this.width * 0.5
+    this.y = this.canvasHeight * 0.7
   }
 
   move() {

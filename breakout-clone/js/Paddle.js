@@ -5,6 +5,8 @@ export default class Paddle extends Role {
     super(path)
     this.width = 160
     this.height = 40
+    this.x = this.canvasWidth * 0.5 - this.width * 0.5
+    this.y = this.canvasHeight * 0.8
   }
 
   moveX(speed) {

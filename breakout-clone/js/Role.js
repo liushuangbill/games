@@ -1,7 +1,9 @@
+import { canvasWidth, canvasHeight } from "./constant";
+
 export default class Role {
   constructor(path) {
-    this.canvasWidth = 400
-    this.canvasHeight = 400
+    this.canvasWidth = canvasWidth
+    this.canvasHeight = canvasHeight
     // 宽高
     this.width = 50
     this.height = 50
@@ -24,8 +26,8 @@ export default class Role {
     return false
   }
 
-  // 产生0-10的随机数
+  // 产生0-5的随机数
   random() {
-    return Math.ceil(Math.random() * 10)
+    return Math.ceil(Math.random() * 5)
   }
 }
