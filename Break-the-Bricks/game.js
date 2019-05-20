@@ -2,71 +2,59 @@ export class Game {
   constructor(selector) {
     this.canvas = this.e(selector)
     this.ctx = canvas.getContext("2d")
-    this.width = window.innerWidth * 0.8
-    this.height = window.innerHeight * 0.8
+    this.width = window.innerWidth * 0.4
+    this.height = window.innerHeight * 0.5
     this.canvas.width = this.width
     this.canvas.height = this.height
-
-    // paddle
-    this.paddleImg = new Image()
-    this.paddleImg.src = "img/paddle.png"
-    this.paddleX = this.width * 0.5 - 20
-    this.paddleY = this.height * 0.8
-    this.toLeft = false
-    this.toRight = false
-    this.speed = 5
+    // 注册按键行为
+    this.actions = {}
+    // 记录是否按键
+    this.keydowns = {}
   }
 
   init() {
     this.addControl()
-    // paddle
-    this.paddleImg.onload = () => {
-      this.startAnimation()
-    }
+    this.startAnimation()
   }
 
-  e(selector, all = false) {
-    return all
-      ? document.querySelectorAll(selector)
-      : document.querySelector(selector)
+  e(selector) {
+    return document.querySelector(selector)
   }
 
-  draw(img, x, y) {
-    this.ctx.drawImage(img, x, y)
+  drwaImage(role) {
+    this.ctx.drawImage(role.image, role.x, role.y)
   }
 
   addControl() {
     window.addEventListener("keydown", e => {
       const k = e.key
-      _handle(k, true)
+      console.log(k)
+      this.keydowns[k] = true
     })
     window.addEventListener("keyup", e => {
       const k = e.key
-      _handle(k, false)
+      this.keydowns[k] = false
     })
+  }
 
-    const _handle = (key, flag) => {
-      if (key === "ArrowLeft") {
-        this.toLeft = flag
-      } else if (key === "ArrowRight") {
-        this.toRight = flag
-      }
-    }
+  registerAnctions(key, fn) {
+    this.actions[key] = fn
   }
 
   startAnimation() {
     const animate = () => {
-      // update x y
-      if (this.toLeft) {
-        this.paddleX -= this.speed
-      }
-      if (this.toRight) {
-        this.paddleX += this.speed
+      // 对于注册过的 action，如果对应的键被按下，则触发
+      const keys = Object.keys(this.actions)
+      for (const key of keys) {
+        if (this.keydowns[key]) {
+          this.actions[key]()
+        }
       }
       // clear
       this.ctx.clearRect(0, 0, this.width, this.height)
-      // redraw
-      this.draw(this.paddleImg, this.paddleX, this.paddleY)
+      // draw
+      // 必须注册一个 draw() 方法
+      this.actions.draw()
 
       window.requestAnimationFrame(animate)
     }
