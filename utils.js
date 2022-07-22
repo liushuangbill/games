@@ -17,3 +17,16 @@ export function randomN(a, b) {
   let n = b - a
   return Math.floor(Math.random() * n + a)
 }
+
+// Mobile or Desktop
+export function detectDeviceType() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+    ? 'Mobile'
+    : 'Desktop';
+}
+
+export function isMobile() {
+  return detectDeviceType() === "Mobile"
+}

@@ -50,40 +50,24 @@ class Snake {
     const maxWidth = ctx.canvas.width
     const maxHeight = ctx.canvas.height
     if (nowDirection === 'left') {
-      if (this.direction === 'right') {
-        return false
-      } else {
-        p.x = head.x - this.size
-        if (p.x < 0) {
-          p.x = maxWidth - this.size
-        }
+      p.x = head.x - this.size
+      if (p.x < 0) {
+        p.x = maxWidth - this.size
       }
     } else if (nowDirection === 'right') {
-      if (this.direction === 'left') {
-        return false
-      } else {
-        p.x = head.x + this.size
-        if (p.x > maxWidth) {
-          p.x = this.size
-        }
+      p.x = head.x + this.size
+      if (p.x > maxWidth) {
+        p.x = this.size
       }
     } else if (nowDirection === 'top') {
-      if (this.direction === 'bottom') {
-        return false
-      } else {
-        p.y = head.y - this.size
-        if (p.y < 0) {
-          p.y = maxHeight - this.size
-        }
+      p.y = head.y - this.size
+      if (p.y < 0) {
+        p.y = maxHeight - this.size
       }
     } else if (nowDirection === 'bottom') {
-      if (this.direction === 'top') {
-        return false
-      } else {
-        p.y = head.y + this.size
-        if (p.y > maxHeight) {
-          p.y = this.size
-        }
+      p.y = head.y + this.size
+      if (p.y > maxHeight) {
+        p.y = this.size
       }
     }
     this.points.unshift(p)
@@ -93,28 +77,42 @@ class Snake {
     return true
   }
 
-  moveLeft = (ctx) => {
-    if (this.throttleMove(ctx, 'left')) {
-      this.direction = 'left'
+  changeDirect = (direct) => {
+    if (direct === 'left') {
+      if (this.direction === 'right') {
+        return false
+      }
+    } else if (direct === 'right') {
+      if (this.direction === 'left') {
+        return false
+      }
+    } else if (direct === 'top') {
+      if (this.direction === 'bottom') {
+        return false
+      }
+    } else if (direct === 'bottom') {
+      if (this.direction === 'top') {
+        return false
+      }
     }
+    this.direction = direct
+    return true
+  }
+
+  moveLeft = (ctx) => {
+    this.changeDirect('left')
   }
 
   moveRight = (ctx) => {
-    if (this.throttleMove(ctx, 'right')) {
-      this.direction = 'right'
-    }
+    this.changeDirect('right')
   }
 
   moveTop = (ctx) => {
-    if (this.throttleMove(ctx, 'top')) {
-      this.direction = 'top'
-    }
+    this.changeDirect('top')
   }
 
   moveBottom = (ctx) => {
-    if (this.throttleMove(ctx, 'bottom')) {
-      this.direction = 'bottom'
-    }
+    this.changeDirect('bottom')
   }
 }
 
@@ -154,16 +152,16 @@ function main() {
   const game = new Game("#canvas", width, height)
   const snake = new Snake([{x: 110, y: 150}, {x: 120, y: 150}, {x: 130, y: 150}, {x: 140, y: 150}, {x: 150, y: 150},], 80)
   const dot = new Dot(randomN(0, width), randomN(0, height))
-  game.registerAction("ArrowUp", (ctx) => {
+  game.registerAction("up", (ctx) => {
     snake.moveTop(ctx)
   })
-  game.registerAction("ArrowDown", (ctx) => {
+  game.registerAction("down", (ctx) => {
     snake.moveBottom(ctx)
   })
-  game.registerAction("ArrowLeft", (ctx) => {
+  game.registerAction("left", (ctx) => {
     snake.moveLeft(ctx)
   })
-  game.registerAction("ArrowRight", (ctx) => {
+  game.registerAction("right", (ctx) => {
     snake.moveRight(ctx)
   })
   game.registerAction("draw", (ctx) => {
